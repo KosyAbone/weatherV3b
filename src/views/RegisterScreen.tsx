@@ -58,10 +58,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
             <Text>Create an Account</Text>
             <View>
-                <TextInput placeholderTextColor={GRAY.s600} placeholder="Firstname" onChangeText={(text: string) => setFirstName(text)}/>
-                <TextInput placeholderTextColor={GRAY.s600} placeholder="Lastname" onChangeText={(text: string) => setLastName(text)}/>
-                <TextInput placeholderTextColor={GRAY.s600} keyboardType="email-address" textContentType="emailAddress" placeholder="Email" onChangeText={(text: string) => setEmail(text)}/>
-                <TextInput placeholderTextColor={GRAY.s600} secureTextEntry={true} autoCapitalize="none" autoCorrect={false} placeholder="password" onChangeText={(text: string) => setPassword(text)}/>
+                <TextInput placeholderTextColor={GRAY.s500} placeholder="Firstname" onChangeText={(text: string) => setFirstName(text)}/>
+                <TextInput placeholderTextColor={GRAY.s500} placeholder="Lastname" onChangeText={(text: string) => setLastName(text)}/>
+                <TextInput placeholderTextColor={GRAY.s500} keyboardType="email-address" textContentType="emailAddress" placeholder="Email" onChangeText={(text: string) => setEmail(text)}/>
+                <TextInput placeholderTextColor={GRAY.s500} secureTextEntry={true} autoCapitalize="none" autoCorrect={false} placeholder="password" onChangeText={(text: string) => setPassword(text)}/>
             </View>
                 <View>
                 <View><Pressable onPress={handleSignUp}><Text>Sign Up</Text></Pressable></View>

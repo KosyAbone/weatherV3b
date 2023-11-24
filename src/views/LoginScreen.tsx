@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { userLogin } from "../controllers/AuthenticationController";
 import { Alert, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useUser } from "../controllers/UserContext";
+import { GRAY } from "../styles/Colors";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -47,7 +48,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <View>
                 <TextInput
                     placeholder="Email"
-                    placeholderTextColor="#767676"
+                    placeholderTextColor={GRAY.s500}
                     onChangeText={text => setEmail(text)}
                     value={email}
                     autoCapitalize="none"
@@ -55,7 +56,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <TextInput
                     autoCapitalize="none"
                     placeholder="Password"
-                    placeholderTextColor="#767676"
+                    placeholderTextColor={GRAY.s500}
                     secureTextEntry
                     onChangeText={text => setPassword(text)}
                     value={password}

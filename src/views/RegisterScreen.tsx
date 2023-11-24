@@ -44,7 +44,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             'Account created',
                             [
                               { text: 'OK', onPress: () => 
-                              navigation.navigate("Login") },
+                              navigation.navigate("Home") },
                             ]
                         );
                     }else {

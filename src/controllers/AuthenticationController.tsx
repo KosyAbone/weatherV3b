@@ -1,5 +1,6 @@
 import { OperationResult } from "../models/ResponseModel";
-import { UserData, UserRegData, emailIsValid, firebaseUserLogin, firebaseUserRegister, passwordIsValid } from "../models/UserModel";
+import { UserData, UserRegData, emailIsValid, firebaseGetUserInfo, firebaseUserLogin, firebaseUserRegister, passwordIsValid } from "../models/UserModel";
+import auth from '@react-native-firebase/auth';
 
 const genericError = {result: false, error: "An unexpected error occurred"};
 
@@ -21,4 +22,20 @@ const userRegister = async ({firstName, lastName, email, password}: UserRegData)
     }
 }
 
-export {userLogin, userRegister};
+const userIsLoggedIn = () => {
+    const user = auth().currentUser;
+    if (!user) {
+        return false;
+    }
+    return true;
+}
+
+const userLogOut = async () => {
+    await auth().signOut();
+}
+
+const getUserInfo = async (userEmail: string) => {
+    return await firebaseGetUserInfo(userEmail);
+}
+
+export {userLogin, userRegister, userIsLoggedIn, userLogOut, getUserInfo};

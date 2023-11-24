@@ -1,7 +1,8 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { useUser } from "../controllers/UserContext";
+import { userLogOut } from "../controllers/AuthenticationController";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -10,15 +11,23 @@ interface Props {
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     const userContext = useUser();
+    let lastTriggerTimestamp = 0;
+    const RATE_LIMIT_TIME = 1000;
 
     useEffect(() => {
         if (userContext.user === null) {
             navigation.navigate("Login");
         }
-    }, [userContext.user, navigation]);
+    }, [userContext.user]);
 
-    const handleLogOut = () => {
-        userContext.setUser(null);
+    
+    const handleLogOut = async () => {
+        const currentTime = Date.now();
+        if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
+            lastTriggerTimestamp = currentTime;
+            await userLogOut();
+            userContext.setUser(null);
+        }
     }
 
     return (

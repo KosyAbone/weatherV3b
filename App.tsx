@@ -80,8 +80,10 @@ function App(): JSX.Element {
                       headerShown: false,
                     }} />
           <Stack.Screen name="Sign Up" component={RegisterScreen} options={{}}/>
-          <Stack.Screen name="Home" component={HomeScreen}   
-            options={{}} />
+          <Stack.Screen name="Home" component={HomeScreen}
+            options={{
+                      headerShown: false,
+                    }} />
         </Stack.Navigator>
       </NavigationContainer>
       </UserProvider>

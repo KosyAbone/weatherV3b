@@ -5,6 +5,7 @@ import { Alert, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "re
 import { useUser } from "../controllers/UserContext";
 import { GRAY } from "../styles/Colors";
 import auth from '@react-native-firebase/auth';
+import { useFocusEffect } from "@react-navigation/native";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -31,6 +32,14 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
       return subscriber;
     }, []);
+
+    //Clear text when user navigates into this screen (Target UX is actually just "clear on exit" but seems difficult to implement on a stack navigator, using an alternative that "should" feel the same)
+    useFocusEffect(
+        React.useCallback(()=>{
+            setEmail("");
+            setPassword("");
+        },[])
+    );
 
     useEffect(() => {
         if (userContext.user !== null) {

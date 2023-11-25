@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {
@@ -14,6 +15,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
+  StyleSheet,
 } from 'react-native';
 import {userRegister} from '../controllers/AuthenticationController';
 import {GRAY} from '../styles/Colors';
@@ -77,21 +80,24 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Create an Account</Text>
-        <View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.title}>Create an Account</Text>
+        <View style={styles.inputContainer}>
           <TextInput
+            style={styles.input}
             placeholderTextColor={GRAY.s500}
             placeholder="Firstname"
             onChangeText={(text: string) => setFirstName(text)}
           />
           <TextInput
+            style={styles.input}
             placeholderTextColor={GRAY.s500}
             placeholder="Lastname"
             onChangeText={(text: string) => setLastName(text)}
           />
           <TextInput
+            style={styles.input}
             placeholderTextColor={GRAY.s500}
             keyboardType="email-address"
             textContentType="emailAddress"
@@ -99,6 +105,7 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
             onChangeText={(text: string) => setEmail(text)}
           />
           <TextInput
+            style={styles.input}
             placeholderTextColor={GRAY.s500}
             secureTextEntry={true}
             autoCapitalize="none"
@@ -107,24 +114,74 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
             onChangeText={(text: string) => setPassword(text)}
           />
         </View>
-        <View>
-          <View>
-            <Pressable onPress={handleSignUp}>
-              <Text>Sign Up</Text>
-            </Pressable>
-          </View>
-          <View>
-            <Text>
-              Already Have an Account?{' '}
-              <TouchableOpacity onPress={removeSelf}>
-                <Text>Log In</Text>
-              </TouchableOpacity>
-            </Text>
-          </View>
+
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+          <Text style={styles.signUpButtonText}>Sign Up</Text>
+        </TouchableOpacity>
+
+        <View style={styles.signInContainer}>
+          <Text style={styles.signInText}>Already Have an Account? </Text>
+          <TouchableOpacity onPress={removeSelf}>
+            <Text style={styles.signInLink}>Log In</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+  },
+  formContainer: {
+    width: '85%',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  signUpButton: {
+    backgroundColor: '#007bff',
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  signUpButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  signInContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signInText: {
+    marginRight: 5,
+  },
+  signInLink: {
+    color: '#007bff',
+    textDecorationLine: 'underline',
+  },
+});
 
 export default RegisterScreen;

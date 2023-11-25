@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
+  StyleSheet,
 } from 'react-native';
 import {useUser} from '../controllers/UserContext';
 import {GRAY} from '../styles/Colors';
@@ -60,9 +62,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
-      //firebase implementation takes empty string and throws so an additional check here
       if (email.length === 0 || password.length === 0) {
-        const error = 'Invalid credentials. Please try again.';
+        const error = 'Please fill all the fields.';
         Alert.alert(error);
         return;
       }
@@ -92,34 +93,102 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView>
-      <View>
-        <View>
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor={GRAY.s500}
-            onChangeText={text => setEmail(text)}
-            value={email}
-            autoCapitalize="none"
-          />
-          <TextInput
-            autoCapitalize="none"
-            placeholder="Password"
-            placeholderTextColor={GRAY.s500}
-            secureTextEntry
-            onChangeText={text => setPassword(text)}
-            value={password}
-          />
-          <TouchableOpacity onPress={handleLogin}>
-            <Text>Sign In</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../assets/logoImage.png')}
+          resizeMode="contain"
+        />
+      </View>
+
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={GRAY.s500}
+          onChangeText={text => setEmail(text)}
+          value={email}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          autoCapitalize="none"
+          placeholder="Password"
+          placeholderTextColor={GRAY.s500}
+          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+        <TouchableOpacity style={styles.signInButton} onPress={handleLogin}>
+          <Text style={styles.signInButtonText}>Sign In</Text>
+        </TouchableOpacity>
+
+        <View style={styles.signUpContainer}>
+          <Text style={styles.signUpText}>Don't have an account?</Text>
+          <TouchableOpacity onPress={handleSignUp}>
+            <Text style={styles.signUpLink}>Sign up</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleSignUp}>
-          <Text>Don't have an account? Sign up</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+  },
+  logoContainer: {
+    flex: 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    // Adjust dimensions as per your logo's aspect ratio
+  },
+  formContainer: {
+    flex: 1,
+    width: '85%',
+  },
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  signInButton: {
+    backgroundColor: '#007bff',
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  signInButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  signUpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signUpText: {
+    marginRight: 5,
+  },
+  signUpLink: {
+    color: '#007bff',
+    textDecorationLine: 'underline',
+  },
+});
 
 export default LoginScreen;

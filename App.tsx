@@ -5,6 +5,8 @@
  * @format
  */
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -24,6 +26,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import LoginScreen from './src/views/LoginScreen';
+import RegisterScreen from './src/views/RegisterScreen';
+import HomeScreen from './src/views/HomeScreen';
+import { UserProvider } from './src/controllers/UserContext';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,37 +68,25 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const Stack = createStackNavigator();
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <UserProvider>
+        <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login"
+          component={LoginScreen}
+            options={{
+                      headerShown: false,
+                    }} />
+          <Stack.Screen name="Sign Up" component={RegisterScreen} options={{}}/>
+          <Stack.Screen name="Home" component={HomeScreen}
+            options={{
+                      headerShown: false,
+                    }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      </UserProvider>
   );
 }
 

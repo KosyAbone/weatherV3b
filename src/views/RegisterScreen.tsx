@@ -101,6 +101,7 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
             placeholderTextColor={GRAY.s500}
             keyboardType="email-address"
             textContentType="emailAddress"
+            autoCapitalize="none"
             placeholder="Email"
             onChangeText={(text: string) => setEmail(text)}
           />

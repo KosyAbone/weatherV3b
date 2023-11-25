@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -5,8 +6,8 @@
  * @format
  */
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -29,7 +30,7 @@ import {
 import LoginScreen from './src/views/LoginScreen';
 import RegisterScreen from './src/views/RegisterScreen';
 import HomeScreen from './src/views/HomeScreen';
-import { UserProvider } from './src/controllers/UserContext';
+import {UserProvider} from './src/controllers/UserContext';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -72,21 +73,30 @@ function App(): JSX.Element {
 
   return (
     <UserProvider>
-        <NavigationContainer>
+      <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login"
-          component={LoginScreen}
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
             options={{
-                      headerShown: false,
-                    }} />
-          <Stack.Screen name="Sign Up" component={RegisterScreen} options={{}}/>
-          <Stack.Screen name="Home" component={HomeScreen}
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Sign Up"
+            component={RegisterScreen}
+            options={{}}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
             options={{
-                      headerShown: false,
-                    }} />
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-      </UserProvider>
+    </UserProvider>
   );
 }
 

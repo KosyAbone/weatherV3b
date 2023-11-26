@@ -87,13 +87,13 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
-            placeholder="Firstname"
+            placeholder="First Name"
             onChangeText={(text: string) => setFirstName(text)}
           />
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
-            placeholder="Lastname"
+            placeholder="Last Name"
             onChangeText={(text: string) => setLastName(text)}
           />
           <TextInput

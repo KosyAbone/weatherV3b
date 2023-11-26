@@ -18,7 +18,7 @@ interface Props {
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
   const userContext = useUser();
-  console.log(userContext.user);
+
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
 

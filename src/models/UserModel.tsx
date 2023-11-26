@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import {OperationResult} from './ResponseModel';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -121,6 +122,13 @@ const firebaseSetUserInfo = async ({
 }: UserData): Promise<boolean> => {
   try {
     await firestore().collection('UserData').add({email, firstName, lastName});
+    // Update user's display name in Firebase Auth
+    const user = auth().currentUser;
+    if (user) {
+      await user.updateProfile({
+        displayName: `${firstName} ${lastName}`, // Set the display name as concatenation of first and last name
+      });
+    }
     return true;
   } catch (error) {
     console.error(error);

@@ -9,7 +9,6 @@ import {
 } from '../models/UserModel';
 import {
   Alert,
-  Pressable,
   SafeAreaView,
   Text,
   TextInput,
@@ -34,7 +33,8 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
   const RATE_LIMIT_TIME = 1000;
   const userContext = useUser();
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    console.log('handleSignUp Working');
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
@@ -52,26 +52,28 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
         );
         return;
       }
-      userRegister({firstName, lastName, email, password})
-        .then(result => {
-          if (result.result === true) {
-            const userData: UserData = {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-            };
-            userContext.setUser(userData);
-            Alert.alert('Success', 'Account created', [
-              {text: 'OK', onPress: () => navigation.navigate('Home')},
-            ]);
-          } else {
-            Alert.alert('Registration failed');
-          }
-        })
-        .catch(e => {
-          console.error(e);
-          Alert.alert('Registration failed');
+      try {
+        const result = await userRegister({
+          firstName,
+          lastName,
+          email,
+          password,
         });
+        if (result.result && result.data) {
+          userContext.setUser(result.data);
+          Alert.alert('Success', 'Account created', [
+            {text: 'OK', onPress: () => navigation.navigate('Home')},
+          ]);
+        } else {
+          Alert.alert(
+            'Registration failed',
+            result.error || 'An unexpected error occurred',
+          );
+        }
+      } catch (e) {
+        console.error(e);
+        Alert.alert('Unexpected error');
+      }
     }
   };
 

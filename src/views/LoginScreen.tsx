@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
-import {getUserInfo, userLogin} from '../controllers/AuthenticationController';
+import {
+  userLogin,
+  getUserInfo,
+  userIsLoggedIn,
+} from '../controllers/AuthenticationController';
 import {
   Alert,
   SafeAreaView,
@@ -14,8 +18,8 @@ import {
 } from 'react-native';
 import {useUser} from '../controllers/UserContext';
 import {GRAY} from '../styles/Colors';
-import auth from '@react-native-firebase/auth';
 import {useFocusEffect} from '@react-navigation/native';
+import {UserData} from '../models/UserModel';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -29,19 +33,17 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
 
-  async function onAuthStateChanged(user: any) {
-    if (user && user.email) {
-      const userData = await getUserInfo(user.email);
-      userContext.setUser(userData);
-    }
-    if (initializing) {
+  useEffect(() => {
+    async function checkLoggedInStatus() {
+      const isLoggedIn = await userIsLoggedIn();
+      if (isLoggedIn) {
+        const userData = await getUserInfo(email); // Replace 'email' with the logged-in user's email or an identifier
+        userContext.setUser(userData);
+      }
       setInitializing(false);
     }
-  }
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
+    checkLoggedInStatus();
   }, []);
 
   //Clear text when user navigates into this screen (Target UX is actually just "clear on exit" but seems difficult to implement on a stack navigator, using an alternative that "should" feel the same)
@@ -58,7 +60,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     }
   }, [userContext.user]);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
@@ -67,19 +69,29 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         Alert.alert(error);
         return;
       }
-      userLogin(email, password)
-        .then(result => {
-          if (result.result === true && result.data) {
-            userContext.setUser(result.data);
-          } else {
-            const error = 'Invalid credentials. Please try again.';
-            Alert.alert(error);
-          }
-        })
-        .catch(e => {
-          console.error(e);
-          Alert.alert('Unexpected error');
-        });
+      try {
+        const result = await userLogin(email, password);
+        if (result.result && result.data) {
+          const userInfo = await getUserInfo(result.data.email);
+
+          const userData: UserData = {
+            email: result.data.email,
+            token: result.data.token || '',
+            firstName: userInfo.firstName || '',
+            lastName: userInfo.lastName || '',
+          };
+          Alert.alert('Login successful');
+          userContext.setUser(userData);
+        } else {
+          Alert.alert(
+            'Login failed',
+            result.error || 'An unexpected error occurred',
+          );
+        }
+      } catch (e) {
+        console.error(e);
+        Alert.alert('Unexpected error');
+      }
     }
   };
 

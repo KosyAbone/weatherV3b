@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
-import {
-  userLogin,
-  getUserInfo,
-  userIsLoggedIn,
-} from '../controllers/AuthenticationController';
+import {userLogin, getUserInfo} from '../controllers/AuthenticationController';
 import {
   Alert,
   SafeAreaView,
@@ -29,22 +25,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userContext = useUser();
-  const [initializing, setInitializing] = useState(true);
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
-
-  useEffect(() => {
-    async function checkLoggedInStatus() {
-      const isLoggedIn = await userIsLoggedIn();
-      if (isLoggedIn) {
-        const userData = await getUserInfo(email); // Replace 'email' with the logged-in user's email or an identifier
-        userContext.setUser(userData);
-      }
-      setInitializing(false);
-    }
-
-    checkLoggedInStatus();
-  }, []);
 
   //Clear text when user navigates into this screen (Target UX is actually just "clear on exit" but seems difficult to implement on a stack navigator, using an alternative that "should" feel the same)
   useFocusEffect(
@@ -99,10 +81,6 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     console.log('Signing up');
     navigation.navigate('Sign Up');
   };
-
-  if (initializing) {
-    return null;
-  }
 
   return (
     <SafeAreaView style={styles.container}>

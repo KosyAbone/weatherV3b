@@ -28,7 +28,7 @@ export const CalculatorHistoryProvider: React.FC<CalculatorHistoryProviderProps>
     const [calculatorHistory, setCalculatorHistory] = useState<CalculatorHistoryData[]>([]);
 
     const addHistory = (newHistory: CalculatorHistoryData) => {
-        setCalculatorHistory((currentHistory) => [...currentHistory, newHistory]);
+        setCalculatorHistory((currentHistory) => [newHistory, ...currentHistory]);
     };
 
     const removeHistoryOfIndex = (index: number) => {

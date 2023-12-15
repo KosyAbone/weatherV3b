@@ -14,7 +14,6 @@ const CalculatorHistory: React.FC<Props> = () => {
     const calculatorHistoryContext = useCalculatorHistory();
 
     const data: CalculatorHistoryData[] = calculatorHistoryContext.history
-  .reverse()
   .map((item) => item);
 
 
@@ -25,7 +24,6 @@ const CalculatorHistory: React.FC<Props> = () => {
         <CalculatorHistoryItem historyData={item} />
     );
 
-    //Reverse, because logically latest items should be the first
     return (
         <>
         <FlatList data={data} renderItem={renderItem} keyExtractor={(item)=>item.id}/>

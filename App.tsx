@@ -31,6 +31,7 @@ import LoginScreen from './src/views/LoginScreen';
 import RegisterScreen from './src/views/RegisterScreen';
 import HomeScreen from './src/views/HomeScreen';
 import {UserProvider} from './src/controllers/UserContext';
+import SearchScreen from './src/views/SearchScreen';
 import { CalculatorHistoryProvider } from './src/components/SimpleCalculator/CalculatorHistoryContext';
 import CalculatorScreen from './src/views/CalculatorScreen';
 
@@ -95,6 +96,13 @@ function App(): JSX.Element {
             component={HomeScreen}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              headerShown: true,
             }}
           />
           <Stack.Screen

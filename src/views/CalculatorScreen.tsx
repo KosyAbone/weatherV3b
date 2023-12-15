@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
 import {
@@ -15,9 +16,8 @@ import CalculatorHistory from '../components/SimpleCalculator/CalculatorHistory'
 import { calculatorStyles } from '../styles/CalculatorStyles';
 
 interface Props {
-    navigation: StackNavigationProp<any>;
+  navigation: StackNavigationProp<any>;
 }
-
 
 const CalculatorScreen: React.FC<Props> = ({navigation}) => {
 

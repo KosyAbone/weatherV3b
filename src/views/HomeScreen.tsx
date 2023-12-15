@@ -8,9 +8,11 @@ import {
   View,
   StyleSheet,
   Image,
+  ScrollView,
 } from 'react-native';
 import {useUser} from '../controllers/UserContext';
 import {userLogOut} from '../controllers/AuthenticationController';
+import { calculatorStyles } from '../styles/CalculatorStyles';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -46,7 +48,9 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
+    <ScrollView>
+      <View style={styles.container}>
       <View style={styles.weatherContainer}>
         <Text style={styles.greeting}>
           Welcome, {userContext.user?.firstName} {userContext.user?.lastName}!
@@ -61,21 +65,23 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
           <Text style={styles.temperature}>23°C</Text>
           <Text style={styles.description}>Partly Cloudy</Text>
         </View>
-      </View>
       <View style={styles.buttonContainer}>
 
         <TouchableOpacity style={styles.searchButton} onPress={handleSearchNavigation}>
           <Text style={styles.searchButton}>Search</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.searchButton} onPress={toCalculatorHistory}>
-          <Text style={styles.searchButton}>Calculator History</Text>
+        <TouchableOpacity style={calculatorStyles.button} onPress={toCalculatorHistory}>
+          <Text>Calculator History</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>
           <Text style={styles.logoutButtonText}>Log Out</Text>
         </TouchableOpacity>
       </View>
+      </View>
+      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

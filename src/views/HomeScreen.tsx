@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {useUser} from '../controllers/UserContext';
 import {userLogOut} from '../controllers/AuthenticationController';
+import { calculatorStyles } from '../styles/CalculatorStyles';
+import CalculatorHistory from '../components/SimpleCalculator/CalculatorHistory';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -37,6 +39,10 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     }
   };
 
+  const toCalculator = () => {
+    navigation.navigate('Calculator');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.weatherContainer}>
@@ -53,6 +59,13 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
           <Text style={styles.temperature}>23°C</Text>
           <Text style={styles.description}>Partly Cloudy</Text>
         </View>
+      </View>
+      <View>
+            <View style={calculatorStyles.historyContainer}>
+            <Text style={calculatorStyles.calculatorTitle}>History</Text>
+                <CalculatorHistory/>
+            </View>
+            <TouchableOpacity style={calculatorStyles.button}onPress={toCalculator}><Text>Go to calculator</Text></TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>

@@ -21,6 +21,7 @@ export const calculatorStyles = StyleSheet.create({
     button: {
       minWidth: 50,
       marginHorizontal: 5,
+      marginVertical: 5,
       padding: 10,
       backgroundColor: 'lightblue',
       alignItems: 'center',

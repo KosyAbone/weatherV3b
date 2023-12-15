@@ -31,6 +31,7 @@ import LoginScreen from './src/views/LoginScreen';
 import RegisterScreen from './src/views/RegisterScreen';
 import HomeScreen from './src/views/HomeScreen';
 import {UserProvider} from './src/controllers/UserContext';
+import SearchScreen from './src/views/SearchScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -92,6 +93,13 @@ function App(): JSX.Element {
             component={HomeScreen}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              headerShown: true,
             }}
           />
         </Stack.Navigator>

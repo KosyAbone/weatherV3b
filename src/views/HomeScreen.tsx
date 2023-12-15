@@ -37,6 +37,11 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     }
   };
 
+    // Add this function to navigate to the SearchScreen
+    const handleSearchNavigation = () => {
+      navigation.navigate('Search');
+    };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.weatherContainer}>
@@ -55,6 +60,11 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
+
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearchNavigation}>
+          <Text style={styles.searchButton}>Search</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>
           <Text style={styles.logoutButtonText}>Log Out</Text>
         </TouchableOpacity>
@@ -118,6 +128,19 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   logoutButtonText: {
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  searchButton: {
+    backgroundColor: '#4682b4',
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  searchButtonText: {
     fontWeight: 'bold',
     color: '#fff',
     fontSize: 18,

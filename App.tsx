@@ -112,6 +112,13 @@ function App(): JSX.Element {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="CalculatorHistory"
+            component={CalculatorHistoryScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       </CalculatorHistoryProvider>

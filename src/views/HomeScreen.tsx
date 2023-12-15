@@ -37,8 +37,8 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     }
   };
 
-  const toCalculator = () => {
-    navigation.navigate('Calculator');
+  const toCalculatorHistory = () => {
+    navigation.navigate('CalculatorHistory');
   }
   // Add this function to navigate to the SearchScreen
   const handleSearchNavigation = () => {
@@ -66,6 +66,10 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
         <TouchableOpacity style={styles.searchButton} onPress={handleSearchNavigation}>
           <Text style={styles.searchButton}>Search</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.searchButton} onPress={toCalculatorHistory}>
+          <Text style={styles.searchButton}>Calculator History</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>

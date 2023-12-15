@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 
@@ -9,15 +9,20 @@ const SearchScreen = () => {
 
   const handleWeatherSearch = async () => {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&units=metric&appid=194cd0b3c13ae8004fb97e7676467241`
-      );
+    //   const response = await axios.get(
+    //     `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&units=metric&appid=194cd0b3c13ae8004fb97e7676467241`
+    //   );
+
+     const response = await axios.get(
+        'http://api.openweathermap.org/data/2.5/weather?q='+searchQuery+
+        '&units=imperial&APPID=143454aa39bbe3442a890cdbf3f9db36');
 
       setWeatherData(response.data);
     } catch (error) {
-      Alert.alert('Error', 'Failed to fetch weather information');
+      Alert.alert('Error', 'Failed to fetch weather information:'+error);
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -28,14 +33,29 @@ const SearchScreen = () => {
         onChangeText={(text) => setSearchQuery(text)}
       />
       <TouchableOpacity style={styles.searchButton} onPress={handleWeatherSearch}>
-        <Icon name="search" size={20} color="#fff" />
+        <Text> Search </Text>
       </TouchableOpacity>
 
       {weatherData && (
-        <View style={styles.weatherInfo}>
-          <Text>{weatherData.name}</Text>
-          <Text>{weatherData.main.temp}°C</Text>
-          {/* Add more information as needed */}
+        <View style={styles.weatherContainer}>
+          <Text style={styles.city}>{weatherData.name}, {weatherData.sys.country}</Text>
+          <Text style={styles.temperature}>{weatherData.main.temp}°C</Text>
+          <Text style={styles.weatherDescription}>{weatherData.weather[0].description}</Text>
+
+          <View style={styles.extraInfoContainer}>
+            <View style={styles.infoItem}>
+              <Icon name="tint" size={20} color="#4682b4" />
+              <Text>{weatherData.main.humidity}%</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Icon name="wind" size={20} color="#4682b4" />
+              <Text>{weatherData.wind.speed} m/s</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Icon name="tachometer" size={20} color="#4682b4" />
+              <Text>{weatherData.main.pressure} hPa</Text>
+            </View>
+          </View>
         </View>
       )}
     </View>
@@ -62,8 +82,29 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
-  weatherInfo: {
+  weatherContainer: {
     marginTop: 20,
+    alignItems: 'center',
+  },
+  city: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  temperature: {
+    fontSize: 32,
+    marginBottom: 5,
+  },
+  weatherDescription: {
+    fontSize: 18,
+    marginBottom: 15,
+  },
+  extraInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  infoItem: {
     alignItems: 'center',
   },
 });

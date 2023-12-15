@@ -25,3 +25,5 @@ const CalculatorHistoryScreen: React.FC<Props> = ({navigation}) => {
         </View>
     );
 }
+
+export default CalculatorHistoryScreen;

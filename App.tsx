@@ -34,6 +34,7 @@ import {UserProvider} from './src/controllers/UserContext';
 import SearchScreen from './src/views/SearchScreen';
 import { CalculatorHistoryProvider } from './src/components/SimpleCalculator/CalculatorHistoryContext';
 import CalculatorScreen from './src/views/CalculatorScreen';
+import CalculatorHistoryScreen from './src/views/CalculatorHistoryScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;

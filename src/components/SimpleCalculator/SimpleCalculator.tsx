@@ -13,6 +13,7 @@ interface Props {
 const SimpleCalculator: React.FC<Props> = () => {
     const [firstNumber, setFirstNumber] = useState(NaN);
     const [secondNumber, setSecondNumber] = useState(NaN);
+    const [result, setResult] = useState("");
 
     const calculatorHistoryContext = useCalculatorHistory();
 
@@ -29,7 +30,10 @@ const SimpleCalculator: React.FC<Props> = () => {
 
     const calculate = (operator: string) => {
         if (!Object.keys(operatorMath).includes(operator)) {
-            console.error('Invalid operator');
+            setResult("Invalid operator");
+            return;
+        }else if (Number.isNaN(firstNumber) || Number.isNaN(secondNumber)) {
+            setResult("Please enter valid numbers");
             return;
         }
         const result = operatorMath[operator as keyof typeof operatorMath](firstNumber, secondNumber);
@@ -37,6 +41,7 @@ const SimpleCalculator: React.FC<Props> = () => {
         const newHistoryData: CalculatorHistoryData = {id: generateID(), firstNumber, secondNumber, result, operator: operator as keyof typeof operations};
         
         calculatorHistoryContext.addHistory(newHistoryData);
+        setResult(result.toString());
     }
 
     return (
@@ -50,6 +55,9 @@ const SimpleCalculator: React.FC<Props> = () => {
             <TouchableOpacity style={calculatorStyles.button} onPress={() => calculate("subtract")}><Text>-</Text></TouchableOpacity>
             <TouchableOpacity style={calculatorStyles.button} onPress={() => calculate("multiply")}><Text>x</Text></TouchableOpacity>
             <TouchableOpacity style={calculatorStyles.button} onPress={() => calculate("divide")}><Text>/</Text></TouchableOpacity>
+        </View>
+        <View>
+            <Text>Result is: {result}</Text>
         </View>
     </View>
     );

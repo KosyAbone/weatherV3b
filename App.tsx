@@ -31,6 +31,10 @@ import LoginScreen from './src/views/LoginScreen';
 import RegisterScreen from './src/views/RegisterScreen';
 import HomeScreen from './src/views/HomeScreen';
 import {UserProvider} from './src/controllers/UserContext';
+import SearchScreen from './src/views/SearchScreen';
+import { CalculatorHistoryProvider } from './src/components/SimpleCalculator/CalculatorHistoryContext';
+import CalculatorScreen from './src/views/CalculatorScreen';
+import CalculatorHistoryScreen from './src/views/CalculatorHistoryScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -73,6 +77,7 @@ function App(): JSX.Element {
 
   return (
     <UserProvider>
+      <CalculatorHistoryProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
@@ -94,8 +99,30 @@ function App(): JSX.Element {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="Calculator"
+            component={CalculatorScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="CalculatorHistory"
+            component={CalculatorHistoryScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
+      </CalculatorHistoryProvider>
     </UserProvider>
   );
 }

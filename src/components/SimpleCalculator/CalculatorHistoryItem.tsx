@@ -1,6 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { CalculatorHistoryData, operations } from "./data/CalculatorHistoryData";
+import { calculatorStyles } from "../../styles/CalculatorStyles";
 
 
 
@@ -10,12 +11,13 @@ interface Props {
 
 const CalculatorHistoryItem: React.FC<Props> = ({historyData}) => {
     return (
-        <>
-        <Text>{historyData.firstNumber}</Text>
+        <View style={calculatorStyles.historyItem}>
+        <Text style={calculatorStyles.historyNumber}>{historyData.firstNumber}</Text>
         <Text>{operations[historyData.operator]}</Text>
-        <Text>{historyData.secondNumber}</Text>
-        <Text>= {historyData.result}</Text>
-        </>
+        <Text style={calculatorStyles.historyNumber}>{historyData.secondNumber}</Text>
+        <Text>=</Text>
+        <Text style={calculatorStyles.historyNumber}>{historyData.result}</Text>
+        </View>
     );
 }
 

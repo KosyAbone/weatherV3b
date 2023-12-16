@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useUser} from '../controllers/UserContext';
 import {userLogOut} from '../controllers/AuthenticationController';
-import { calculatorStyles } from '../styles/CalculatorStyles';
+import {calculatorStyles} from '../styles/CalculatorStyles';
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -41,7 +41,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
   const toCalculatorHistory = () => {
     navigation.navigate('CalculatorHistory');
-  }
+  };
   // Add this function to navigate to the SearchScreen
   const handleSearchNavigation = () => {
     navigation.navigate('Search');
@@ -49,38 +49,44 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView>
-    <ScrollView>
-      <View style={styles.container}>
-      <View style={styles.weatherContainer}>
-        <Text style={styles.greeting}>
-          Welcome, {userContext.user?.firstName} {userContext.user?.lastName}!
-        </Text>
-        <View style={styles.weatherInfo}>
-          <Image
-            source={require('../assets/weather-icon.png')}
-            style={styles.weatherIcon}
-            resizeMode="contain"
-          />
-          <Text style={styles.city}>New York</Text>
-          <Text style={styles.temperature}>23°C</Text>
-          <Text style={styles.description}>Partly Cloudy</Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.weatherContainer}>
+            <Text style={styles.greeting}>
+              Welcome, {userContext.user?.firstName}{' '}
+              {userContext.user?.lastName}!
+            </Text>
+            <View style={styles.weatherInfo}>
+              <Image
+                source={require('../assets/weather-icon.png')}
+                style={styles.weatherIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.city}>New York</Text>
+              <Text style={styles.temperature}>23°C</Text>
+              <Text style={styles.description}>Partly Cloudy</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.searchButton}
+                onPress={handleSearchNavigation}>
+                <Text style={styles.searchButton}>Search</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={calculatorStyles.button}
+                onPress={toCalculatorHistory}>
+                <Text>Calculator History</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.logoutButton}
+                onPress={handleLogOut}>
+                <Text style={styles.logoutButtonText}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      <View style={styles.buttonContainer}>
-
-        <TouchableOpacity style={styles.searchButton} onPress={handleSearchNavigation}>
-          <Text style={styles.searchButton}>Search</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={calculatorStyles.button} onPress={toCalculatorHistory}>
-          <Text>Calculator History</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogOut}>
-          <Text style={styles.logoutButtonText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
-      </View>
-      </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -108,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: 130,
   },
   weatherIcon: {
     width: 200,
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     borderRadius: 8,
     marginBottom: 15,
+    marginTop: 15,
   },
   logoutButtonText: {
     fontWeight: 'bold',

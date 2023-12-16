@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert, Image } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 
@@ -9,20 +16,15 @@ const SearchScreen = () => {
 
   const handleWeatherSearch = async () => {
     try {
-    //   const response = await axios.get(
-    //     `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&units=metric&appid=194cd0b3c13ae8004fb97e7676467241`
-    //   );
-
-     const response = await axios.get(
-        'http://api.openweathermap.org/data/2.5/weather?q='+searchQuery+
-        '&units=imperial&APPID=143454aa39bbe3442a890cdbf3f9db36');
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&units=metric&appid=194cd0b3c13ae8004fb97e7676467241`,
+      );
 
       setWeatherData(response.data);
     } catch (error) {
-      Alert.alert('Error', 'Failed to fetch weather information:'+error);
+      Alert.alert('Error', 'Failed to fetch weather information:' + error);
     }
   };
-
 
   return (
     <View style={styles.container}>
@@ -30,17 +32,23 @@ const SearchScreen = () => {
         style={styles.searchInput}
         placeholder="Enter City"
         value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
+        onChangeText={text => setSearchQuery(text)}
       />
-      <TouchableOpacity style={styles.searchButton} onPress={handleWeatherSearch}>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={handleWeatherSearch}>
         <Text> Search </Text>
       </TouchableOpacity>
 
       {weatherData && (
         <View style={styles.weatherContainer}>
-          <Text style={styles.city}>{weatherData.name}, {weatherData.sys.country}</Text>
+          <Text style={styles.city}>
+            {weatherData.name}, {weatherData.sys.country}
+          </Text>
           <Text style={styles.temperature}>{weatherData.main.temp}°C</Text>
-          <Text style={styles.weatherDescription}>{weatherData.weather[0].description}</Text>
+          <Text style={styles.weatherDescription}>
+            {weatherData.weather[0].description}
+          </Text>
 
           <View style={styles.extraInfoContainer}>
             <View style={styles.infoItem}>

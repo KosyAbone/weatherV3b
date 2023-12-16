@@ -3,8 +3,15 @@ import {StyleSheet} from 'react-native';
 export const calculatorStyles = StyleSheet.create({
   calculatorTitle: {
     fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   calculatorContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '100%',
     paddingVertical: 5,
     paddingHorizontal: 5,
   },

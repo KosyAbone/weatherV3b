@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 130,
+    marginBottom: 80,
   },
   weatherIcon: {
     width: 200,

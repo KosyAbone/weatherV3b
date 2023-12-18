@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,16 +8,19 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {useUser} from '../controllers/UserContext';
-import {userLogOut} from '../controllers/AuthenticationController';
-import {calculatorStyles} from '../styles/CalculatorStyles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useUser } from '../controllers/UserContext';
+import { userLogOut } from '../controllers/AuthenticationController';
+import { calculatorStyles } from '../styles/CalculatorStyles';
+import WeatherComponent from './WeatherComponent'; // Import the WeatherComponent
 
 interface Props {
   navigation: StackNavigationProp<any>;
 }
 
-const HomeScreen: React.FC<Props> = ({navigation}) => {
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const userContext = useUser();
+  const [showWeather, setShowWeather] = useState(false);
 
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
@@ -42,9 +43,14 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   const toCalculatorHistory = () => {
     navigation.navigate('CalculatorHistory');
   };
-  // Add this function to navigate to the SearchScreen
+
   const handleSearchNavigation = () => {
     navigation.navigate('Search');
+  };
+
+  const handleWeatherNavigation = () => {
+    navigation.navigate('Weather');
+    setShowWeather(true);
   };
 
   return (
@@ -77,6 +83,12 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
                 style={calculatorStyles.button}
                 onPress={toCalculatorHistory}>
                 <Text>Calculator History</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.weatherButton}
+                onPress={handleWeatherNavigation}>
+                <Text style={styles.weatherButtonText}>Weather</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -164,6 +176,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   searchButtonText: {
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  weatherButton: {
+    backgroundColor: '#32cd32', // Green color for the Weather button
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  weatherButtonText: {
     fontWeight: 'bold',
     color: '#fff',
     fontSize: 18,

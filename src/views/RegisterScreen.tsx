@@ -26,18 +26,84 @@ interface Props {
 }
 const RegisterScreen: React.FC<Props> = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
+  const[firstNameError, setFirstNameError] = useState('');
   const [lastName, setLastName] = useState('');
+  const[lastNameError, setLastNameError] = useState('');
   const [email, setEmail] = useState('');
+  const[emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
+  const[passError, setPassError] = useState('');
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
   const userContext = useUser();
+
+
+  const validateFirstNameInput = () => {
+    if (firstName.trim() === '') {
+      setFirstNameError('Please enter some text.');
+      return false;
+    }
+    setFirstNameError('');
+    return true;
+  };
+
+  const validateLastNameInput = () => {
+    if (lastName.trim() === '') {
+      setLastNameError('Please enter some text.');
+      return false;
+    }
+    setLastNameError('');
+    return true;
+  };
+
+  const validateEmailInput = () => {
+    if (email.trim() === '') {
+      setEmailError('Please enter some text.');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const validatePassInput = () => {
+    if (password.trim() === '') {
+      setPassError('Please enter some text.');
+      return false;
+    }
+    setPassError('');
+    return true;
+  };
 
   const handleSignUp = async () => {
     console.log('handleSignUp Working');
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
+
+      if (validateFirstNameInput()) {
+        setFirstNameError('');
+      }else{
+        return;
+      }
+      if (validateLastNameInput()) {
+        setLastNameError('');
+      }else{
+        return;
+      }
+
+      if (validateEmailInput()) {
+        setEmailError('');
+      }else{
+        return;
+      }
+
+      if (validatePassInput()) {
+        setPassError('');
+      }else{
+        return;
+      }
+
+
       if (!nameIsValid(firstName) || !nameIsValid(lastName)) {
         Alert.alert('Please enter a valid name (without invalid characters)');
         return;
@@ -86,18 +152,23 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
       <View style={styles.formContainer}>
         <Text style={styles.title}>Create an Account</Text>
         <View style={styles.inputContainer}>
+          
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
             placeholder="First Name"
             onChangeText={(text: string) => setFirstName(text)}
           />
+          {firstNameError ? <Text style={{color: 'red' }}>{firstNameError}</Text> : null}
+
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
             placeholder="Last Name"
             onChangeText={(text: string) => setLastName(text)}
           />
+          {lastNameError ? <Text style={{color: 'red' }}>{lastNameError}</Text> : null}
+          
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
@@ -107,6 +178,8 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
             placeholder="Email"
             onChangeText={(text: string) => setEmail(text)}
           />
+          {emailError ? <Text style={{color: 'red' }}>{emailError}</Text> : null}
+          
           <TextInput
             style={styles.input}
             placeholderTextColor={GRAY.s500}
@@ -116,6 +189,7 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
             placeholder="password"
             onChangeText={(text: string) => setPassword(text)}
           />
+          {passError ? <Text style={{color: 'red' }}>{passError}</Text> : null}
         </View>
 
         <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
@@ -159,7 +233,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginTop: 15,
   },
   signUpButton: {
     backgroundColor: '#007bff',

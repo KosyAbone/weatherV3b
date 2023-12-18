@@ -70,7 +70,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
               <TouchableOpacity
                 style={styles.searchButton}
                 onPress={handleSearchNavigation}>
-                <Text style={styles.searchButton}>Search</Text>
+                <Text>Search</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -140,26 +140,28 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '80%',
   },
-  logoutButton: {
-    backgroundColor: '#ff6347',
-    paddingVertical: 12,
-    paddingHorizontal: 50,
+  logoutButton: { minWidth: 50,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    padding: 10,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 8,
-    marginBottom: 15,
-    marginTop: 15,
   },
   logoutButtonText: {
     fontWeight: 'bold',
-    color: '#fff',
-    fontSize: 18,
+    color: '#FFFFFF',
     textAlign: 'center',
   },
   searchButton: {
+    marginHorizontal: 5,
+    marginVertical: 5,
+    padding: 10,
     backgroundColor: '#4682b4',
-    paddingVertical: 12,
-    paddingHorizontal: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 8,
-    marginBottom: 15,
   },
   searchButtonText: {
     fontWeight: 'bold',

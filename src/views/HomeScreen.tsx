@@ -88,13 +88,13 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.weatherButton}
                 onPress={handleWeatherNavigation}>
-                <Text style={styles.weatherButtonText}>Weather</Text>
+                <Text style={{color:'white'}}>Weather</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.logoutButton}
                 onPress={handleLogOut}>
-                <Text style={styles.logoutButtonText}>Log Out</Text>
+                <Text style={{color:'white'}}>Log Out</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 80,
+    marginBottom: 50,
   },
   weatherIcon: {
     width: 200,
@@ -182,11 +182,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   weatherButton: {
-    backgroundColor: '#32cd32', // Green color for the Weather button
-    paddingVertical: 12,
-    paddingHorizontal: 50,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    padding: 10,
+    backgroundColor: '32cd32',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 8,
-    marginBottom: 15,
   },
   weatherButtonText: {
     fontWeight: 'bold',

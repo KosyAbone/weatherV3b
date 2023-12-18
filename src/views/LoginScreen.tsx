@@ -24,6 +24,9 @@ interface Props {
 const LoginScreen: React.FC<Props> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
+
   const userContext = useUser();
   let lastTriggerTimestamp = 0;
   const RATE_LIMIT_TIME = 1000;
@@ -42,15 +45,40 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     }
   }, [userContext.user]);
 
+
+  const validateEmailInput = () => {
+    if (email.trim() === '') {
+      setEmailError('Please enter some text.');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const validatePasswordInput = () => {
+    if (password.trim() === '') {
+      setPassError('Please enter some text.');
+      return false;
+    }
+    setPassError('');
+    return true;
+  };
   const handleLogin = async () => {
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
-      if (email.length === 0 || password.length === 0) {
-        const error = 'Please fill all the fields.';
-        Alert.alert(error);
-        return;
-      }
+        if (validateEmailInput()) {
+          console.log('Input is valid:', emailError);
+          setEmailError('');
+        }else{
+          return;
+        }
+        if (validatePasswordInput()) {
+          console.log('Input is valid:', passError);
+          setPassError('');
+        }else{
+          return;
+        }
       try {
         const result = await userLogin(email, password);
         if (result.result && result.data) {
@@ -101,6 +129,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
           value={email}
           autoCapitalize="none"
         />
+        {emailError ? <Text style={{color: 'red' }}>{emailError}</Text> : null}
+
         <TextInput
           style={styles.input}
           autoCapitalize="none"
@@ -110,6 +140,9 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
           onChangeText={text => setPassword(text)}
           value={password}
         />
+        {passError ? <Text style={{color: 'red' }}>{passError}</Text> : null}
+
+
         <TouchableOpacity style={styles.signInButton} onPress={handleLogin}>
           <Text style={styles.signInButtonText}>Sign In</Text>
         </TouchableOpacity>
@@ -153,7 +186,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginTop: 15,
   },
   signInButton: {
     backgroundColor: '#007bff',
@@ -161,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    marginTop: 15,
   },
   signInButtonText: {
     color: '#fff',
@@ -174,9 +207,11 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     marginRight: 5,
+    marginTop: 15,
   },
   signUpLink: {
     color: '#007bff',
+    marginTop: 15,
     textDecorationLine: 'underline',
   },
 });

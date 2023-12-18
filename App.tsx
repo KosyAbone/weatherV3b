@@ -35,6 +35,7 @@ import SearchScreen from './src/views/SearchScreen';
 import {CalculatorHistoryProvider} from './src/components/SimpleCalculator/CalculatorHistoryContext';
 import CalculatorScreen from './src/views/CalculatorScreen';
 import CalculatorHistoryScreen from './src/views/CalculatorHistoryScreen';
+import WeatherComponent from './src/views/WeatherComponent';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -118,6 +119,14 @@ function App(): JSX.Element {
               component={CalculatorHistoryScreen}
               options={{
                 headerShown: false,
+              }}
+            />
+             <Stack.Screen
+              name="Weather"
+              component={WeatherComponent}
+              options={{
+                headerShown: true,
+                title: 'Weather Details',
               }}
             />
           </Stack.Navigator>

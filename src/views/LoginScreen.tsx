@@ -45,7 +45,6 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     }
   }, [userContext.user]);
 
-
   const validateEmailInput = () => {
     if (email.trim() === '') {
       setEmailError('Please enter some text.');
@@ -67,18 +66,18 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     const currentTime = Date.now();
     if (currentTime - lastTriggerTimestamp >= RATE_LIMIT_TIME) {
       lastTriggerTimestamp = currentTime;
-        if (validateEmailInput()) {
-          console.log('Input is valid:', emailError);
-          setEmailError('');
-        }else{
-          return;
-        }
-        if (validatePasswordInput()) {
-          console.log('Input is valid:', passError);
-          setPassError('');
-        }else{
-          return;
-        }
+      if (validateEmailInput()) {
+        console.log('Input is valid:', emailError);
+        setEmailError('');
+      } else {
+        return;
+      }
+      if (validatePasswordInput()) {
+        console.log('Input is valid:', passError);
+        setPassError('');
+      } else {
+        return;
+      }
       try {
         const result = await userLogin(email, password);
         if (result.result && result.data) {
@@ -129,7 +128,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
           value={email}
           autoCapitalize="none"
         />
-        {emailError ? <Text style={{color: 'red' }}>{emailError}</Text> : null}
+        {emailError ? <Text style={{color: 'red'}}>{emailError}</Text> : null}
 
         <TextInput
           style={styles.input}
@@ -140,8 +139,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
           onChangeText={text => setPassword(text)}
           value={password}
         />
-        {passError ? <Text style={{color: 'red' }}>{passError}</Text> : null}
-
+        {passError ? <Text style={{color: 'red'}}>{passError}</Text> : null}
 
         <TouchableOpacity style={styles.signInButton} onPress={handleLogin}>
           <Text style={styles.signInButtonText}>Sign In</Text>

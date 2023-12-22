@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,10 +10,10 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useUser } from '../controllers/UserContext';
-import { userLogOut } from '../controllers/AuthenticationController';
-import { calculatorStyles } from '../styles/CalculatorStyles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useUser} from '../controllers/UserContext';
+import {userLogOut} from '../controllers/AuthenticationController';
+import {calculatorStyles} from '../styles/CalculatorStyles';
 import WeatherComponent from './WeatherComponent'; // Import the WeatherComponent
 
 interface Props {
@@ -89,13 +90,13 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
               <TouchableOpacity
                 style={styles.weatherButton}
                 onPress={handleWeatherNavigation}>
-                <Text style={{color:'white'}}>Weather</Text>
+                <Text style={{color: 'white'}}>Weather</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.logoutButton}
                 onPress={handleLogOut}>
-                <Text style={{color:'white'}}>Log Out</Text>
+                <Text style={{color: 'white'}}>Log Out</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -153,7 +154,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '80%',
   },
-  logoutButton: { minWidth: 50,
+  logoutButton: {
+    minWidth: 50,
     marginHorizontal: 5,
     marginVertical: 5,
     padding: 10,

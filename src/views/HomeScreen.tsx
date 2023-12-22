@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
@@ -18,7 +19,7 @@ interface Props {
   navigation: StackNavigationProp<any>;
 }
 
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
+const HomeScreen: React.FC<Props> = ({navigation}) => {
   const userContext = useUser();
   const [showWeather, setShowWeather] = useState(false);
 
